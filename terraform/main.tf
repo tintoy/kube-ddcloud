@@ -12,8 +12,11 @@ variable "vlan_name"				{ default = "Primary" }
 variable "domain_name"          	{ default = "tintoy.io" }
 variable "subdomain_name"       	{ default = "au10.kube" }
 variable "aws_hosted_zone_id"   	{ } # Supplied in credentials.tf
+variable "aws_credentials_profile"	{ } # Supplied in credentials.tf
 
 variable "os_image_name"			{ default = "Ubuntu 14.04 2 CPU" }
+
+# The base network address for deployed servers.
 variable "ipv4_base"				{ default = "10.0.7" }
 
 variable "master_count"				{ default = 3	}

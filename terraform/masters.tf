@@ -28,8 +28,13 @@ resource "ddcloud_server" "master" {
 	os_image_name			= "${var.os_image_name}"
 
 	tag {
-		name  = "role"
-		value = "master"
+		name 	= "role"
+		value	= "master"
+	}
+
+	tag {
+		name 	= "consul_dc"
+		value	= "${data.ddcloud_networkdomain.kubernetes.datacenter}"
 	}
 }
 
@@ -64,7 +69,7 @@ resource "null_resource" "master_ssh_bootstrap" {
 }
 
 output "master_host_names" {
-	value = ["${ddcloud_server.master.*.name}"]
+	value = ["${ddcloud_server.master.*.name}.${subdomain_name}.${domain_name}"]
 }
 output "master_public_ips" {
 	value = ["${ddcloud_nat.master.*.public_ipv4}"]

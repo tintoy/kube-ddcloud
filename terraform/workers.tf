@@ -31,6 +31,11 @@ resource "ddcloud_server" "worker" {
 		name  = "role"
 		value = "worker"
 	}
+
+	tag {
+		name 	= "consul_dc"
+		value	= "${data.ddcloud_networkdomain.kubernetes.datacenter}"
+	}
 }
 
 resource "ddcloud_nat" "worker" {

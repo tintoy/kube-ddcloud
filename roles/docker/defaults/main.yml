@@ -1,0 +1,10 @@
+---
+
+docker_tcp: true
+
+docker_compose_version: "1.8.1"
+
+docker_options: ""
+docker_network_options:
+  - "-H unix:///var/run/docker.sock"
+  - "{% if docker_tcp %}-H tcp://0.0.0.0:2375{% endif %}"

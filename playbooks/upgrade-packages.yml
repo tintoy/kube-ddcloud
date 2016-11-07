@@ -1,0 +1,3 @@
+- include: rolling-upgrade-packages.yml
+  vars:
+    serial: 5 # Upgrade packages nodes on up to 5 nodes at once

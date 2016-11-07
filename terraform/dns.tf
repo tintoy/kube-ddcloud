@@ -1,3 +1,8 @@
+provider "aws" {
+    region                  = "us-west-1"
+    profile                 = "${var.aws_credentials_profile}"
+}
+
 resource "aws_route53_record" "dns-master" {
     count                   = "${var.master_count}"
     type                    = "A"
