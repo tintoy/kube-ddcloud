@@ -3,10 +3,15 @@ provider "ddcloud" {
 }
 
 # You will need: A network domain, a VLAN, and a firewall rule that grants you inbound SSH access to the target servers.
+# You will also need an AWS Route53 DNS zone (otherwise, delete or rename dns.tf).
 
 variable "networkdomain_name"		{ default = "Kubernetes Demo" }
 variable "datacenter_name"			{ default = "AU10" }
 variable "vlan_name"				{ default = "Primary" }
+
+variable "domain_name"          	{ default = "tintoy.io" }
+variable "subdomain_name"       	{ default = "au10.kube" }
+variable "aws_hosted_zone_id"   	{ } # Supplied in credentials.tf
 
 variable "os_image_name"			{ default = "Ubuntu 14.04 2 CPU" }
 variable "ipv4_base"				{ default = "10.0.7" }
@@ -30,7 +35,7 @@ variable "edge_cpu_count"	 		{ default = 2 }
 variable "edge_address_start" 		{ default = 50 }
 
 variable "ssh_bootstrap_password"	{ } # Supplied in credentials.tf
-variable "ssh_public_key"			{ } # Supplied in credentials.tf
+variable "ssh_public_key_file"		{ } # Supplied in credentials.tf
 
 # Constants
 variable "count_format"		 		{ default = "%02d" }

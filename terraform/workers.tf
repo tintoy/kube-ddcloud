@@ -9,6 +9,8 @@ resource "ddcloud_server" "worker" {
 	description 			= "Kubernetes worker node ${format(var.count_format, count.index + 1)}"
 	admin_password			= "${var.ssh_bootstrap_password}"
 
+	auto_start				= true
+
 	# OS disk (/dev/sda) - expand to ${var.worker_disk_size_gb}.
 	disk {
 		scsi_unit_id		= 0
@@ -46,7 +48,7 @@ resource "null_resource" "worker_ssh_bootstrap" {
 		inline = [
 			"mkdir -p ~/.ssh",
 			"chmod 700 ~/.ssh",
-			"echo '${var.ssh_public_key}' > ~/.ssh/authorized_keys",
+			"echo '${file(var.ssh_public_key_file)}' > ~/.ssh/authorized_keys",
 			"chmod 600 ~/.ssh/authorized_keys"
 		]
 
@@ -59,4 +61,11 @@ resource "null_resource" "worker_ssh_bootstrap" {
 			host			= "${element(ddcloud_nat.worker.*.public_ipv4, count.index)}"
 		}
 	}
+}
+
+output "worker_host_names" {
+	value = ["${ddcloud_server.worker.*.name}"]
+}
+output "worker_public_ips" {
+	value = ["${ddcloud_nat.worker.*.public_ipv4}"]
 }
